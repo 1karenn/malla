@@ -1,1 +1,81 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #ffeaf3;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #cc1e5c;
+}
+
+.malla {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 10px;
+}
+
+.semestre {
+  background: #fbd0df;
+  border-radius: 12px;
+  padding: 10px;
+  min-width: 220px;
+  flex-shrink: 0;
+  border: 2px solid #f7a7c0;
+}
+
+.semestre h2 {
+  text-align: center;
+  font-size: 18px;
+  color: #b4004e;
+  margin-bottom: 8px;
+}
+
+.ramo {
+  background-color: #ffc2d8;
+  margin: 6px 0;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s;
+  font-size: 14px;
+  font-weight: bold;
+  color: #6b0033;
+  white-space: pre-line;
+}
+
+.ramo:hover {
+  background-color: #fdaec8;
+}
+
+.ramo.aprobado {
+  background-color: #d18acc;
+  color: white;
+  text-decoration: line-through;
+}
+
+.ramo.bloqueado {
+  background-color: #dddddd;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.boton-aprobar {
+  background-color: #f08ab8;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin: 5px auto;
+  display: block;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.boton-aprobar:hover {
+  background-color: #dd6da5;
+}
 
