@@ -9,10 +9,16 @@
 <body>
   <h1>Malla Interactiva Psicología - UCM</h1>
   <p class="instrucciones">Haz clic en cada ramo para marcarlo como aprobado. Los ramos con prerrequisitos se desbloquean al aprobar los anteriores.</p>
+  
   <div class="malla" id="malla">
-    <!-- Aquí se generan dinámicamente los semestres y ramos desde script.js -->
+    <!-- Se llena con JS -->
   </div>
+
+  <div class="descargar">
+    <button id="descargarPDF">Descargar PDF</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-
