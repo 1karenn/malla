@@ -1,3 +1,6 @@
+const STORAGE_KEY = "malla_psicologia_ucm_aprobados";
+const aprobadosGuardados = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
 const ramos = [
   // SEMESTRE 1
   { id: "bio1", nombre: "Fund. Biológicos", creditos: 6, semestre: 1 },
@@ -29,6 +32,7 @@ const ramos = [
   { id: "evo3", nombre: "Psicología Evolutiva III", creditos: 5, semestre: 4, prereq: ["evo2"] },
   { id: "personalidad", nombre: "Personalidad", creditos: 5, semestre: 4, prereq: ["enf2"] },
   { id: "introfe", nombre: "Introducción a la Fe", creditos: 2, semestre: 4 },
+  { id: "integracion1", nombre: "Taller de Integración I", creditos: 6, semestre: 4, prereq: ["evo3", "personalidad"] },
 
   // SEMESTRE 5
   { id: "psicoeducacional", nombre: "Psicología Educacional", creditos: 5, semestre: 5, prereq: ["aprendizaje"] },
@@ -48,7 +52,7 @@ const ramos = [
 
   // SEMESTRE 7
   { id: "clinica2", nombre: "Psicología Clínica II", creditos: 5, semestre: 7, prereq: ["clinica1"] },
-  { id: "educacional4", nombre: "Taller de Intervención Educacional", creditos: 5, semestre: 7, prereq: ["educacional3"] },
+  { id: "educacional4", nombre: "Taller Intervención Educacional", creditos: 5, semestre: 7, prereq: ["educacional3"] },
   { id: "laboral", nombre: "Psicología Laboral", creditos: 5, semestre: 7, prereq: ["organizacional"] },
   { id: "tecnicas2", nombre: "Técnicas Evaluación II", creditos: 5, semestre: 7, prereq: ["tecnicas1"] },
   { id: "comunitario", nombre: "Taller Intervención SocioComunitaria", creditos: 5, semestre: 7, prereq: ["intervencion1"] },
@@ -64,14 +68,14 @@ const ramos = [
 
   // SEMESTRE 9
   { id: "practica1", nombre: "Práctica Profesional Inicial", creditos: 25, semestre: 9, prereq: ["intervencionclinica", "intervencionorgan", "integrativo2", "seminario"] },
+  { id: "optativo2", nombre: "Optativo II", creditos: 4, semestre: 9 },
 
   // SEMESTRE 10
   { id: "practica2", nombre: "Práctica Profesional Avanzada", creditos: 25, semestre: 10, prereq: ["practica1"] },
-  { id: "optativo2", nombre: "Optativo II", creditos: 4, semestre: 10 },
   { id: "optativo3", nombre: "Optativo III", creditos: 4, semestre: 10 }
 ];
 
-const mallaContainer = document.querySelector(".malla");
+const mallaContainer = document.getElementById("malla");
 const semestres = {};
 
 ramos.forEach(ramo => {
@@ -79,8 +83,17 @@ ramos.forEach(ramo => {
     const box = document.createElement("div");
     box.className = "semestre";
     box.id = `semestre-${ramo.semestre}`;
-    box.innerHTML = `<h2>Semestre ${ramo.semestre}</h2>
-    <button onclick="aprobarSemestre(${ramo.semestre})" class="boton-aprobar">Aprobar semestre</button>`;
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = `Semestre ${ramo.semestre}`;
+    box.appendChild(titulo);
+
+    const boton = document.createElement("button");
+    boton.textContent = "Aprobar semestre";
+    boton.className = "boton-aprobar";
+    boton.addEventListener("click", () => aprobarSemestre(ramo.semestre));
+    box.appendChild(boton);
+
     mallaContainer.appendChild(box);
     semestres[ramo.semestre] = box;
   }
@@ -90,16 +103,33 @@ ramos.forEach(ramo => {
   div.id = ramo.id;
   div.textContent = `${ramo.nombre}\n(${ramo.creditos} créditos)`;
 
+  if (aprobadosGuardados.includes(ramo.id)) {
+    div.classList.add("aprobado");
+  }
+
   if (ramo.prereq) div.classList.add("bloqueado");
 
   div.addEventListener("click", () => aprobarRamo(div, ramo));
   semestres[ramo.semestre].appendChild(div);
 });
 
+window.addEventListener("DOMContentLoaded", () => {
+  ramos.forEach(r => {
+    if (r.prereq) {
+      const prereqCumplido = r.prereq.every(p => document.getElementById(p).classList.contains("aprobado"));
+      const elem = document.getElementById(r.id);
+      if (prereqCumplido) elem.classList.remove("bloqueado");
+    }
+  });
+});
+
 function aprobarRamo(element, ramo) {
   if (element.classList.contains("bloqueado")) return;
-
   element.classList.toggle("aprobado");
+
+  const aprobados = document.querySelectorAll(".ramo.aprobado");
+  const ids = Array.from(aprobados).map(r => r.id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 
   ramos.forEach(r => {
     if (r.prereq && r.prereq.includes(ramo.id)) {
@@ -122,3 +152,17 @@ function aprobarSemestre(nro) {
   });
 }
 
+// 🔽 Descargar PDF
+document.getElementById("descargarPDF").addEventListener("click", () => {
+  const element = document.getElementById("malla");
+
+  const opt = {
+    margin: 0.5,
+    filename: 'malla_psicologia_ucm.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+  };
+
+  html2pdf().set(opt).from(element).save();
+});
