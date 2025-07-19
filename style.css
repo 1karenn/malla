@@ -1,81 +1,103 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #ffeaf3;
+  font-family: sans-serif;
+  background-color: #fff0f5;
   margin: 0;
   padding: 20px;
 }
 
 h1 {
   text-align: center;
-  color: #cc1e5c;
+  color: #b30059;
+}
+
+.instrucciones {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1rem;
 }
 
 .malla {
   display: flex;
-  overflow-x: auto;
   gap: 20px;
+  overflow-x: auto;
   padding: 10px;
 }
 
 .semestre {
-  background: #fbd0df;
-  border-radius: 12px;
+  min-width: 250px;
+  background-color: #ffe6f0;
+  border-radius: 15px;
   padding: 10px;
-  min-width: 220px;
+  border: 2px solid #ffb3d9;
   flex-shrink: 0;
-  border: 2px solid #f7a7c0;
 }
 
 .semestre h2 {
   text-align: center;
-  font-size: 18px;
-  color: #b4004e;
-  margin-bottom: 8px;
+  color: #cc0066;
+  font-size: 1.2em;
+}
+
+.boton-aprobar {
+  display: block;
+  margin: 10px auto;
+  padding: 6px 12px;
+  background-color: #ff66b2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.boton-aprobar:hover {
+  background-color: #cc007a;
 }
 
 .ramo {
-  background-color: #ffc2d8;
-  margin: 6px 0;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
+  background-color: #ffcce6;
+  border-radius: 10px;
+  margin: 5px 0;
+  padding: 8px;
   text-align: center;
-  transition: all 0.3s;
-  font-size: 14px;
-  font-weight: bold;
-  color: #6b0033;
+  cursor: pointer;
+  transition: background-color 0.3s ease, text-decoration 0.3s ease;
   white-space: pre-line;
+  font-size: 0.9rem;
 }
 
 .ramo:hover {
-  background-color: #fdaec8;
+  background-color: #ff99cc;
 }
 
 .ramo.aprobado {
-  background-color: #d18acc;
+  background-color: #b266ff;
   color: white;
   text-decoration: line-through;
 }
 
 .ramo.bloqueado {
-  background-color: #dddddd;
-  color: #999;
+  background-color: #ccc;
+  color: #666;
   cursor: not-allowed;
 }
 
-.boton-aprobar {
-  background-color: #f08ab8;
+.descargar {
+  text-align: center;
+  margin: 30px 0;
+}
+
+#descargarPDF {
+  background-color: #cc007a;
   color: white;
   border: none;
-  padding: 6px 10px;
-  margin: 5px auto;
-  display: block;
-  border-radius: 8px;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 13px;
+  font-weight: bold;
 }
 
-.boton-aprobar:hover {
-  background-color: #dd6da5;
+#descargarPDF:hover {
+  background-color: #990055;
 }
-
